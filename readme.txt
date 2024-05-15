@@ -7,8 +7,11 @@
     ]
 }
 
-
-
+{
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
+  ]
+}
 
 {
     "builds": [

@@ -10,11 +10,6 @@ const io = new Server(server);
 app.use(express.static('public'));
 app.use(express.static(path.join(__dirname, 'index.html')));
 
-app.get('/', (req, res) => {
-    //res.send('Servidor inicializado correctamente.');
-    res.sendFile(path.join(__dirname, 'index.html'));
-});
-
 io.on('connection', (socket) => {
     console.log('Un usuario se ha conectado.');
 
