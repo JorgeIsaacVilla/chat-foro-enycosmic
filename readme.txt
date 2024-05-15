@@ -1,4 +1,16 @@
 {
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/"
+        }
+    ]
+}
+
+
+
+
+{
     "builds": [
       {
         "src": "./server.js",
