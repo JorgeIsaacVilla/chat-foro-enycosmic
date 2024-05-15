@@ -27,3 +27,16 @@
       }
     ]
   }
+
+  {
+  "rewrites": [
+    {
+      "source": "/socket.io/(.*)",
+      "destination": "https://chat-foro-enycosmic.vercel.app/socket.io/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
+  ]
+}
