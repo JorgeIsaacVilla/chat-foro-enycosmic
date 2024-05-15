@@ -7,8 +7,13 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-// Servir los archivos estáticos de la carpeta "public"
-app.use(express.static('public'));
+// Sirve los archivos estáticos de la carpeta "public"
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Ruta principal
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html')); // Envía el archivo index.html
+});
 
 io.on('connection', (socket) => {
     console.log('Un usuario se ha conectado.');
@@ -23,8 +28,7 @@ io.on('connection', (socket) => {
     });
 });
 
-//const PORT = process.env.PORT || 3000;
-const PORT = 'chat-foro-enycosmic.vercel.app'
+const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
