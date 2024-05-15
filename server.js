@@ -7,13 +7,8 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-// Sirve los archivos estáticos de la carpeta "public"
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Ruta principal
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html')); // Envía el archivo index.html
-});
+// Servir los archivos estáticos de la carpeta "public"
+app.use(express.static('public'));
 
 io.on('connection', (socket) => {
     console.log('Un usuario se ha conectado.');
