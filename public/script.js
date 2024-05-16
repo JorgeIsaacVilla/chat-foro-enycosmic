@@ -1,38 +1,36 @@
-        // Conectar con el servidor
-        const socket = io();
+const express = require('express');
+const http = require('http');
+const { Server } = require('socket.io');
+const path = require('path');
 
-        // Referencias a los elementos del DOM
-        const form = document.getElementById('form');
-        const input = document.getElementById('input');
-        const messages = document.getElementById('messages');
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
 
-        // Función para agregar un mensaje a la lista
-        const addMessage = (msg) => {
-            const li = document.createElement('li');
-            li.textContent = msg;
-            messages.appendChild(li);
-        };
+// Servir los archivos estáticos de la carpeta "public"
+app.use(express.static(path.join(__dirname, 'public')));
 
-        // Manejar el envío de mensajes
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const msg = input.value;
-            if (msg) {
-                // Enviar el mensaje al servidor
-                socket.emit('chat message', msg);
-                // Limpiar el campo de entrada
-                input.value = '';
-            }
-        });
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
-        // Escuchar mensajes del servidor
-        socket.on('chat message', (msg) => {
-            // Agregar el mensaje a la lista de mensajes
-            addMessage(msg);
-        });
+io.on('connection', (socket) => {
+    console.log('Un usuario se ha conectado.');
 
-        // Escuchar cuando el servidor esté listo
-        socket.on('server ready', (msg) => {
-            console.log(msg);
-            addMessage(msg);  // Mostrar el mensaje en el frontend
-        });
+    // Escuchar mensajes del cliente
+    socket.on('chat message', (msg) => {
+        io.emit('chat message', msg);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('Un usuario se ha desconectado.');
+    });
+
+    // Enviar un evento al cliente cuando el servidor esté listo
+    socket.emit('server ready', `Servidor inicializado correctamente en el puerto ${PORT}`);
+});
+
+const PORT = process.env.PORT || 3000; // Definir solo el número del puerto
+server.listen(PORT, () => {
+    console.log(`Servidor escuchando en el puerto http://localhost:${PORT}/`);
+});

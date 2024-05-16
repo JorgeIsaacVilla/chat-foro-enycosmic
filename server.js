@@ -1,18 +1,13 @@
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
-const path = require('path');
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
 // Servir los archivos estáticos de la carpeta "public"
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+app.use(express.static('public'));
 
 io.on('connection', (socket) => {
     console.log('Un usuario se ha conectado.');
@@ -25,12 +20,9 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log('Un usuario se ha desconectado.');
     });
-
-    // Enviar un evento al cliente cuando el servidor esté listo
-    socket.emit('server ready', `Servidor inicializado correctamente en el puerto ${PORT}`);
 });
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
-    console.log(`Servidor escuchando en el puerto ${PORT}`);
+    console.log(`Servidor escuchando en el puerto http://localhost:${PORT}/`);
 });
