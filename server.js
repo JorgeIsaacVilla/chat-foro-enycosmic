@@ -8,7 +8,7 @@ const server = http.createServer(app);
 const io = new Server(server);
 
 // Servir los archivos estáticos de la carpeta "public"
-const publicPath = path.join(__dirname, 'public');
+app.use(express.static(__dirname));
 app.use(express.static(path.join(__dirname, 'index.html')));
 
 // Ruta de inicio
