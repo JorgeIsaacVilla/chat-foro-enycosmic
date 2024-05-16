@@ -12,7 +12,7 @@ app.use(express.static(__dirname,'public','index.html'));
 
 app.get('/', (req, res) => {
     //res.send('Servidor inicializado correctamente.');
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname,'public', 'index.html'));
 });
 
 io.on('connection', (socket) => {
