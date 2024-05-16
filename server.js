@@ -2,18 +2,25 @@ const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const path = require('path');
+const cors = require('cors');
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-// Servir los archivos estáticos de la carpeta "public"
-app.use(express.static(__dirname));
-app.use(express.static(path.join(__dirname, 'index.html')));
+const frontendURL = 'https://chat-foro-enycosmic.vercel.app'; // URL del frontend en Vercel
+const localURL = 'http://localhost:3000'; // URL local para desarrollo
 
-// Ruta de inicio
+app.use(cors({
+    origin: [frontendURL, localURL],
+    credentials: true // Habilitar el intercambio de cookies a través de solicitudes CORS
+}));
+
+// Servir los archivos estáticos de la carpeta "public"
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 io.on('connection', (socket) => {
