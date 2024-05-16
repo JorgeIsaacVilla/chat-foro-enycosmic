@@ -9,11 +9,11 @@ const io = new Server(server);
 
 // Servir los archivos estáticos de la carpeta "public"
 const publicPath = path.join(__dirname, 'public');
-app.use(express.static(publicPath));
+app.use(express.static(path.join(__dirname, 'index.html')));
 
 // Ruta de inicio
 app.get('/', (req, res) => {
-    res.sendFile(path.join(publicPath, 'index.html'));
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 io.on('connection', (socket) => {
