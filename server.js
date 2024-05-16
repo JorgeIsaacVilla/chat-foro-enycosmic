@@ -8,13 +8,14 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-const frontendURL = 'https://chat-foro-enycosmic.vercel.app'; // URL del frontend en Vercel
-const localURL = 'http://localhost:3000'; // URL local para desarrollo
+const frontendURL = 'https://chat-foro-enycosmic.vercel.app';
+const localURL = 'http://localhost:3000';
 
 app.use(cors({
     origin: [frontendURL, localURL],
     credentials: true // Habilitar el intercambio de cookies a través de solicitudes CORS
 }));
+app.use(express.json());
 
 // Servir los archivos estáticos de la carpeta "public"
 app.use(express.static(path.join(__dirname, 'public')));
