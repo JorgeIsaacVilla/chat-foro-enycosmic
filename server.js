@@ -43,6 +43,7 @@ io.on('connection', (socket) => {
     });
 
     // Enviar un evento al cliente cuando el servidor esté listo
+
     socket.emit('server ready', `Servidor inicializado correctamente en el puerto ${PORT}`);
 });
 
