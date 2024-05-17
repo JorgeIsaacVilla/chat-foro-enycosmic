@@ -6,6 +6,8 @@ const cors = require('cors');
 
 const app = express();
 const server = http.createServer(app);
+
+// Configuración del WebSocket
 const io = new Server(server, {
     cors: {
         origin: ['https://chat-foro-enycosmic.vercel.app', 'http://localhost:3000'],
@@ -43,7 +45,6 @@ io.on('connection', (socket) => {
     });
 
     // Enviar un evento al cliente cuando el servidor esté listo
-
     socket.emit('server ready', `Servidor inicializado correctamente en el puerto ${PORT}`);
 });
 
