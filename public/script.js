@@ -35,10 +35,9 @@ const socket = io('https://chat-foro-enycosmic.vercel.app', {
             // Agregar el mensaje a la lista de mensajes
             addMessage(msg);
         });
-/*
+
         // Escuchar cuando el servidor esté listo
         socket.on('server ready', (msg) => {
             console.log(msg);
             addMessage(msg);  // Mostrar el mensaje en el frontend
         });
-*/
