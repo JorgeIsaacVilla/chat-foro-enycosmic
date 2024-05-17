@@ -1,4 +1,7 @@
 // Conectar con el servidor usando la URL completa
+//https://chat-foro-enycosmic.vercel.app
+//http://localhost:3000/
+
 const socket = io('https://chat-foro-enycosmic.vercel.app', {
     withCredentials: true
 });

@@ -6,7 +6,13 @@ const cors = require('cors');
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+    cors: {
+        origin: ['https://chat-foro-enycosmic.vercel.app', 'http://localhost:3000'],
+        methods: ['GET', 'POST'],
+        credentials: true
+    }
+});
 
 const frontendURL = 'https://chat-foro-enycosmic.vercel.app';
 const localURL = 'http://localhost:3000';
