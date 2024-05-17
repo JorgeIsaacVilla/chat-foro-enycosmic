@@ -6,23 +6,14 @@ const cors = require('cors');
 
 const app = express();
 const server = http.createServer(app);
-
-// Configuración del WebSocket
 const io = new Server(server, {
-    cors: {
-        origin: ['https://chat-foro-enycosmic.vercel.app', 'http://localhost:3000'],
-        methods: ['GET', 'POST'],
-        credentials: true
-    }
+    cors: true // Habilitar todos los CORS
 });
 
 const frontendURL = 'https://chat-foro-enycosmic.vercel.app';
 const localURL = 'http://localhost:3000';
 
-app.use(cors({
-    origin: [frontendURL, localURL],
-    credentials: true // Habilitar el intercambio de cookies a través de solicitudes CORS
-}));
+app.use(cors());
 app.use(express.json());
 
 // Servir los archivos estáticos de la carpeta "public"
