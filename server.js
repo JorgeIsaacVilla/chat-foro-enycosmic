@@ -1,16 +1,27 @@
-// Importar las dependencias
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
+const path = require('path');
+const cors = require('cors');
 
-// Crear una instancia de Express
 const app = express();
-
-// Crear un servidor HTTP y asociarlo a la instancia de Express
 const server = http.createServer(app);
+const io = new Server(server, {
+    cors: {
+        origin: ['https://chat-foro-enycosmic.vercel.app', 'http://localhost:3000'],
+        methods: ['GET', 'POST'],
+        credentials: true
+    }
+});
 
-// Crear una instancia de Socket.io y asociarla al servidor HTTP
-const io = new Server(server);
+const frontendURL = 'https://chat-foro-enycosmic.vercel.app';
+const localURL = 'http://localhost:3000';
+
+app.use(cors({
+    origin: [frontendURL, localURL],
+    credentials: true // Habilitar el intercambio de cookies a través de solicitudes CORS
+}));
+app.use(express.json());
 
 // Servir los archivos estáticos de la carpeta "public"
 app.use(express.static(path.join(__dirname, 'public')));
@@ -19,24 +30,24 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Manejar conexiones de Socket.io
 io.on('connection', (socket) => {
     console.log('Un usuario se ha conectado.');
 
     // Escuchar mensajes del cliente
     socket.on('chat message', (msg) => {
-        // Emitir el mensaje a todos los clientes conectados
         io.emit('chat message', msg);
     });
 
-    // Manejar la desconexión de un usuario
     socket.on('disconnect', () => {
         console.log('Un usuario se ha desconectado.');
     });
+
+    // Enviar un evento al cliente cuando el servidor esté listo
+
+    socket.emit('server ready', `Servidor inicializado correctamente en el puerto ${PORT}`);
 });
 
-// Iniciar el servidor en el puerto 3000
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000; // Definir solo el número del puerto
 server.listen(PORT, () => {
-    console.log(`Servidor escuchando en el puerto ${PORT}`);
+    console.log(`Servidor escuchando en el puerto http://localhost:${PORT}/`);
 });
