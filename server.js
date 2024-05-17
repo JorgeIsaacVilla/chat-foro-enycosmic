@@ -20,22 +20,10 @@ app.use(cors({
 app.use(express.json());
 
 // Servir los archivos estáticos de la carpeta "public"
-//app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-    res.send(`
-        <!DOCTYPE html>
-        <html lang="es">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Proyecto de Node con Vercel</title>
-        </head>
-        <body>
-            <h1>Proyecto de Node con Vercel</h1>
-        </body>
-        </html>
-    `);
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 io.on('connection', (socket) => {
