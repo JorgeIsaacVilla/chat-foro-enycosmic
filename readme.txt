@@ -131,3 +131,21 @@ server.listen(PORT, () => {
   ]
 }
 --------------------------------------------------------------//Publicación uno (fin)///--------------------------------------
+{
+  "builds": [
+    {
+      "src": "./server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/socket.io/(.*)",
+      "dest": "server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "public/index.html"
+    }
+  ]
+}
