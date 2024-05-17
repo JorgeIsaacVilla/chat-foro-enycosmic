@@ -13,7 +13,8 @@ const server = http.createServer(app);
 const io = new Server(server);
 
 // Servir los archivos estáticos de la carpeta "public"
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 // Manejar conexiones de Socket.io
 io.on('connection', (socket) => {
