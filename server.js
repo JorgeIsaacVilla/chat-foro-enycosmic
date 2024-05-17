@@ -4,17 +4,9 @@ const { Server } = require('socket.io');
 const path = require('path');
 const cors = require('cors');
 
-const PORT = process.env.PORT || 3000; // Definir solo el número del puerto
-
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server, {
-    cors: {
-        origin: ['https://chat-foro-enycosmic.vercel.app', 'http://localhost:3000'],
-        methods: ['GET', 'POST'],
-        credentials: true
-    }
-});
+const io = new Server(server);
 
 const frontendURL = 'https://chat-foro-enycosmic.vercel.app';
 const localURL = 'http://localhost:3000';
@@ -48,6 +40,7 @@ io.on('connection', (socket) => {
     socket.emit('server ready', `Servidor inicializado correctamente en el puerto ${PORT}`);
 });
 
+const PORT = process.env.PORT || 3000; // Definir solo el número del puerto
 server.listen(PORT, () => {
     console.log(`Servidor escuchando en el puerto http://localhost:${PORT}/`);
 });
