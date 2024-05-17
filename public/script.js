@@ -1,5 +1,7 @@
-        // Conectar con el servidor
-        const socket = io();
+// Conectar con el servidor usando la URL completa
+const socket = io('https://chat-foro-enycosmic.vercel.app', {
+    withCredentials: true
+});
 
         // Referencias a los elementos del DOM
         const form = document.getElementById('form');
